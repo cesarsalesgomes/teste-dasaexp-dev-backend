@@ -1,8 +1,7 @@
-export class CustomError extends Error {
-  constructor(code: string, message: string) {
-    super(message);
-    this.code = code;
-  }
+import { HttpException, HttpStatus } from '@nestjs/common';
 
-  public code: string
+export class CustomError extends HttpException {
+  constructor(code: string, message: string) {
+    super(message, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }
