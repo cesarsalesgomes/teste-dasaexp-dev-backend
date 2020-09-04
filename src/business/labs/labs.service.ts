@@ -6,7 +6,7 @@ import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity
 import LabsEntity from './labs.entity';
 import LabsFactory from './labs.factory';
 import {
-  CREATE_LAB_ERROR, GET_ACTIVE_LABS_ERROR, LAB_NOT_FOUND_ERROR, LAB_UPDATE_ERROR
+  CREATE_LAB_ERROR, GET_ACTIVE_LABS_ERROR, LAB_NOT_FOUND_ERROR, LAB_UPDATE_ERROR, LAB_DELETE_ERROR
 } from './labs.error';
 import CreateLabInput from './inputs/CreateLabInput';
 
@@ -58,5 +58,15 @@ export default class LabsService {
     const lab = await this.getLabById(labId);
 
     return this.updateLab(lab, partialLab);
+  }
+
+  async deleteLabById(labId: number): Promise<LabsEntity> {
+    const lab = await this.getLabById(labId);
+
+    try {
+      return this.updateLab(lab, { status: Status.INATIVO });
+    } catch (error) {
+      throw LAB_DELETE_ERROR;
+    }
   }
 }

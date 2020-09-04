@@ -1,5 +1,5 @@
 import {
-  Controller, Post, Body, Get, Put, Param
+  Controller, Post, Body, Get, Put, Param, Delete
 } from '@nestjs/common';
 import LabsService from './labs.service';
 import CreateLabInput from './inputs/CreateLabInput';
@@ -23,5 +23,10 @@ export class LabsController {
   @Put(':id')
   async updateLabById(@Param('id') labId: number, @Body() partialLab: UpdateLabInput): Promise<LabsEntity> {
     return this.labsService.updateLabById(labId, partialLab);
+  }
+
+  @Delete(':id')
+  async deleteLabById(@Param('id') labId: number): Promise<LabsEntity> {
+    return this.labsService.deleteLabById(labId);
   }
 }

@@ -19,3 +19,8 @@ export const LAB_UPDATE_ERROR = new CustomError(
   'LAB_UPDATE',
   'Erro ao atualizar laboratório'
 );
+
+export const LAB_DELETE_ERROR = new CustomError(
+  'LAB_DELETE',
+  'Erro ao desativar laboratório'
+);
