@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Status } from '@src/common/enums/Status';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import LabsEntity from './labs.entity';
 import LabsFactory from './labs.factory';
-import { CREATE_LAB_ERROR, GET_ACTIVE_LABS_ERROR } from './labs.error';
+import {
+  CREATE_LAB_ERROR, GET_ACTIVE_LABS_ERROR, LAB_NOT_FOUND_ERROR, LAB_UPDATE_ERROR
+} from './labs.error';
 import CreateLabInput from './inputs/CreateLabInput';
 
 @Injectable()
@@ -29,5 +32,31 @@ export default class LabsService {
     } catch (error) {
       throw GET_ACTIVE_LABS_ERROR;
     }
+  }
+
+  async getLabById(labId: number): Promise<LabsEntity> {
+    try {
+      return await this.labsRepository.findOneOrFail(labId);
+    } catch (error) {
+      throw LAB_NOT_FOUND_ERROR;
+    }
+  }
+
+  async updateLab(lab: LabsEntity, partialLab: QueryDeepPartialEntity<LabsEntity>): Promise<LabsEntity> {
+    try {
+      const updatedAt = new Date();
+
+      await this.labsRepository.update(lab.id, { ...partialLab, updatedAt });
+
+      return { ...lab, ...partialLab } as LabsEntity;
+    } catch (error) {
+      throw LAB_UPDATE_ERROR;
+    }
+  }
+
+  async updateLabById(labId: number, partialLab: QueryDeepPartialEntity<LabsEntity>): Promise<LabsEntity> {
+    const lab = await this.getLabById(labId);
+
+    return this.updateLab(lab, partialLab);
   }
 }

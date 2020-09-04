@@ -9,3 +9,13 @@ export const GET_ACTIVE_LABS_ERROR = new CustomError(
   'GET_ACTIVE_LABS',
   'Erro ao buscar laboratórios ativos'
 );
+
+export const LAB_NOT_FOUND_ERROR = new CustomError(
+  'LAB_NOT_FOUND',
+  'Laboratório não encontrado'
+);
+
+export const LAB_UPDATE_ERROR = new CustomError(
+  'LAB_UPDATE',
+  'Erro ao atualizar laboratório'
+);
