@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Status } from '@src/common/enums/Status';
 import LabsEntity from './labs.entity';
 import LabsFactory from './labs.factory';
-import { CREATE_LAB_ERROR } from './labs.error';
+import { CREATE_LAB_ERROR, GET_ACTIVE_LABS_ERROR } from './labs.error';
 import CreateLabInput from './inputs/CreateLabInput';
 
 @Injectable()
@@ -19,6 +20,14 @@ export default class LabsService {
       return await this.labsRepository.save(this.labsFactory.createLab(input));
     } catch (error) {
       throw CREATE_LAB_ERROR;
+    }
+  }
+
+  async getLabs(): Promise<LabsEntity[]> {
+    try {
+      return await this.labsRepository.find({ where: { status: Status.ATIVO } });
+    } catch (error) {
+      throw GET_ACTIVE_LABS_ERROR;
     }
   }
 }
