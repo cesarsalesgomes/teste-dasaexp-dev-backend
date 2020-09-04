@@ -3,6 +3,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 
 // Entities
 import LabsEntity from '@src/business/labs/labs.entity';
+import ExamsEntity from '@src/business/exams/exams.entity';
 
 export const typeormConfig = (migrations?: (string)[], migrationsDir?: string): PostgresConnectionOptions => {
   const {
@@ -21,7 +22,7 @@ export const typeormConfig = (migrations?: (string)[], migrationsDir?: string): 
   const host = DATABASE_HOST;
 
   // Entities
-  const entities = [LabsEntity];
+  const entities = [LabsEntity, ExamsEntity];
 
   return {
     type,
