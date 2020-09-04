@@ -1,5 +1,5 @@
 import {
-  Controller, Post, Body, Get, Put, Param
+  Controller, Post, Body, Get, Put, Param, Delete
 } from '@nestjs/common';
 import CreateExamInput from './inputs/CreateExamInput';
 import ExamsEntity from './exams.entity';
@@ -23,5 +23,10 @@ export class ExamsController {
   @Put(':id')
   async updateExamById(@Param('id') examId: number, @Body() partialExam: UpdateExamInput): Promise<ExamsEntity> {
     return this.examsService.updateExamById(examId, partialExam);
+  }
+
+  @Delete(':id')
+  async deleteExamById(@Param('id') examId: number): Promise<ExamsEntity> {
+    return this.examsService.deleteExamById(examId);
   }
 }

@@ -19,3 +19,8 @@ export const EXAM_UPDATE_ERROR = new CustomError(
   'EXAM_UPDATE',
   'Erro ao atualizar exame'
 );
+
+export const EXAM_DELETE_ERROR = new CustomError(
+  'EXAM_DELETE',
+  'Erro ao desativar exame'
+);

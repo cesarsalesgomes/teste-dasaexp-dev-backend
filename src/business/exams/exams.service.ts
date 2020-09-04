@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Status } from '@src/common/enums/Status';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import {
-  CREATE_EXAM_ERROR, GET_ACTIVE_EXAMS_ERROR, EXAM_NOT_FOUND_ERROR, EXAM_UPDATE_ERROR
+  CREATE_EXAM_ERROR, GET_ACTIVE_EXAMS_ERROR, EXAM_NOT_FOUND_ERROR, EXAM_UPDATE_ERROR, EXAM_DELETE_ERROR
 } from './exams.error';
 import ExamsFactory from './exams.factory';
 import CreateExamInput from './inputs/CreateExamInput';
@@ -58,5 +58,15 @@ export default class ExamsService {
     const exam = await this.getExamById(examId);
 
     return this.updateExam(exam, partialExam);
+  }
+
+  async deleteExamById(examId: number): Promise<ExamsEntity> {
+    const exam = await this.getExamById(examId);
+
+    try {
+      return this.updateExam(exam, { status: Status.INATIVO });
+    } catch (error) {
+      throw EXAM_DELETE_ERROR;
+    }
   }
 }
