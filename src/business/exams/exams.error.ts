@@ -9,3 +9,13 @@ export const GET_ACTIVE_EXAMS_ERROR = new CustomError(
   'GET_ACTIVE_EXAMS',
   'Erro ao buscar exames ativos'
 );
+
+export const EXAM_NOT_FOUND_ERROR = new CustomError(
+  'EXAM_NOT_FOUND',
+  'Exame não encontrado'
+);
+
+export const EXAM_UPDATE_ERROR = new CustomError(
+  'EXAM_UPDATE',
+  'Erro ao atualizar exame'
+);
