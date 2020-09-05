@@ -5,7 +5,8 @@ import { Status } from '@src/common/enums/Status';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import {
   CREATE_EXAM_ERROR, GET_ACTIVE_EXAMS_ERROR, EXAM_NOT_FOUND_ERROR,
-  EXAM_UPDATE_ERROR, EXAM_DELETE_ERROR, GET_EXAM_LABS_ERROR, CREATE_EXAMS_ERROR
+  EXAM_UPDATE_ERROR, EXAM_DELETE_ERROR, GET_EXAM_LABS_ERROR, CREATE_EXAMS_ERROR,
+  EXAM_DEACTIVATED_ERROR
 } from './exams.error';
 import ExamsFactory from './exams.factory';
 import CreateExamInput from './inputs/CreateExamInput';
@@ -51,6 +52,14 @@ export default class ExamsService {
     } catch (error) {
       throw EXAM_NOT_FOUND_ERROR;
     }
+  }
+
+  async getExamByIdAndCheckIfItsActivated(examId: number): Promise<ExamsEntity> {
+    const exam = await this.getExamById(examId);
+
+    if (exam.status !== Status.ATIVO) throw EXAM_DEACTIVATED_ERROR;
+
+    return exam;
   }
 
   async getExamByName(name: string, relations: ExamsRelations[]): Promise<ExamsEntity> {

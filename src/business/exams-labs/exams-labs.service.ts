@@ -20,8 +20,8 @@ export default class ExamsLabsService {
   ) { }
 
   async createExamLab({ examId, labId }: CreateExamLabInput): Promise<ExamsLabsEntity> {
-    const exam = await this.examsService.getExamById(examId);
-    const lab = await this.labsService.getLabById(labId);
+    const exam = await this.examsService.getExamByIdAndCheckIfItsActivated(examId);
+    const lab = await this.labsService.getLabByIdAndCheckIfItsDeactivated(labId);
 
     try {
       return await this.examslLabsRepository.save(this.examsLabsFactory.createExamLab(exam, lab));

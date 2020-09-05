@@ -34,3 +34,8 @@ export const CREATE_EXAMS_ERROR = new CustomError(
   'CREATE_EXAMS',
   'Erro ao criar exames em lote'
 );
+
+export const EXAM_DEACTIVATED_ERROR = new CustomError(
+  'EXAM_DEACTIVATED',
+  'Exame desativado'
+);

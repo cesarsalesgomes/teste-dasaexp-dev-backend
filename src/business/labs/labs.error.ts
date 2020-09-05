@@ -29,3 +29,8 @@ export const CREATE_LABS_ERROR = new CustomError(
   'CREATE_LABS',
   'Erro ao criar laboratório em lote'
 );
+
+export const LAB_DEACTIVATED_ERROR = new CustomError(
+  'LAB_DEACTIVATED',
+  'Laboratório desativado'
+);
