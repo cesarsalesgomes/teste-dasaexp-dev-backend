@@ -8,6 +8,7 @@ import ExamsFactory from './exams.factory';
 @Module({
   imports: [TypeOrmModule.forFeature([ExamsEntity])],
   controllers: [ExamsController],
-  providers: [ExamsService, ExamsFactory]
+  providers: [ExamsService, ExamsFactory],
+  exports: [ExamsService]
 })
 export default class ExamsModule { }

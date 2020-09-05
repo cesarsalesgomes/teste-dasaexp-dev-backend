@@ -8,6 +8,7 @@ import LabsFactory from './labs.factory';
 @Module({
   imports: [TypeOrmModule.forFeature([LabsEntity])],
   controllers: [LabsController],
-  providers: [LabsService, LabsFactory]
+  providers: [LabsService, LabsFactory],
+  exports: [LabsService]
 })
 export default class LabsModule { }
