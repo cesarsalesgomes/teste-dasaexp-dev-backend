@@ -6,7 +6,7 @@ import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity
 import LabsEntity from './labs.entity';
 import LabsFactory from './labs.factory';
 import {
-  CREATE_LAB_ERROR, GET_ACTIVE_LABS_ERROR, LAB_NOT_FOUND_ERROR, LAB_UPDATE_ERROR, LAB_DELETE_ERROR
+  CREATE_LAB_ERROR, GET_ACTIVE_LABS_ERROR, LAB_NOT_FOUND_ERROR, LAB_UPDATE_ERROR, LAB_DELETE_ERROR, CREATE_LABS_ERROR
 } from './labs.error';
 import CreateLabInput from './inputs/CreateLabInput';
 
@@ -23,6 +23,14 @@ export default class LabsService {
       return await this.labsRepository.save(this.labsFactory.createLab(input));
     } catch (error) {
       throw CREATE_LAB_ERROR;
+    }
+  }
+
+  async createLabs(inputs: CreateLabInput[]): Promise<LabsEntity[]> {
+    try {
+      return await this.labsRepository.save(inputs.map((lab) => this.labsFactory.createLab(lab)));
+    } catch (error) {
+      throw CREATE_LABS_ERROR;
     }
   }
 

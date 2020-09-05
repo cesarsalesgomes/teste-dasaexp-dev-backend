@@ -15,6 +15,11 @@ export class LabsController {
     return this.labsService.createLab(input);
   }
 
+  @Post('batch')
+  async createLabs(@Body() input: CreateLabInput[]): Promise<LabsEntity[]> {
+    return this.labsService.createLabs(input);
+  }
+
   @Get()
   async getLabs(): Promise<LabsEntity[]> {
     return this.labsService.getLabs();
