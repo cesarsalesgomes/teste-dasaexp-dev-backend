@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeleteResult } from 'typeorm';
 import { DUPLICATE_KEY_ERROR } from '@src/common/constants/constants';
-import { CREATE_EXAM_LAB_ERROR, DUPLICATE_EXAM_LAB_ERROR } from './exams-labs.error';
+import { CREATE_EXAM_LAB_ERROR, DUPLICATE_EXAM_LAB_ERROR, DELETE_EXAM_LAB_ERROR } from './exams-labs.error';
 import { ExamsLabsEntity } from './exams-labs.entity';
 import CreateExamLabInput from './inputs/CreateExamLabInput';
 import ExamsService from '../exams/exams.service';
@@ -31,6 +31,14 @@ export default class ExamsLabsService {
       }
 
       throw CREATE_EXAM_LAB_ERROR;
+    }
+  }
+
+  async deleteExamLab(examLabId: number): Promise<DeleteResult> {
+    try {
+      return await this.examslLabsRepository.delete(examLabId);
+    } catch (error) {
+      throw DELETE_EXAM_LAB_ERROR;
     }
   }
 }
