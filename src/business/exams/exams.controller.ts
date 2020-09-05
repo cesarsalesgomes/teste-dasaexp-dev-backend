@@ -16,6 +16,11 @@ export class ExamsController {
     return this.examsService.createExam(input);
   }
 
+  @Post('batch')
+  async createExams(@Body() input: CreateExamInput[]): Promise<ExamsEntity[]> {
+    return this.examsService.createExams(input);
+  }
+
   @Get()
   async getExams(): Promise<ExamsEntity[]> {
     return this.examsService.getExams();

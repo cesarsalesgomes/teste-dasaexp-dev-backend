@@ -5,7 +5,7 @@ import { Status } from '@src/common/enums/Status';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import {
   CREATE_EXAM_ERROR, GET_ACTIVE_EXAMS_ERROR, EXAM_NOT_FOUND_ERROR,
-  EXAM_UPDATE_ERROR, EXAM_DELETE_ERROR, GET_EXAM_LABS_ERROR
+  EXAM_UPDATE_ERROR, EXAM_DELETE_ERROR, GET_EXAM_LABS_ERROR, CREATE_EXAMS_ERROR
 } from './exams.error';
 import ExamsFactory from './exams.factory';
 import CreateExamInput from './inputs/CreateExamInput';
@@ -26,6 +26,14 @@ export default class ExamsService {
       return await this.examsRepository.save(this.examsFactory.createExam(input));
     } catch (error) {
       throw CREATE_EXAM_ERROR;
+    }
+  }
+
+  async createExams(inputs: CreateExamInput[]): Promise<ExamsEntity[]> {
+    try {
+      return await this.examsRepository.save(inputs.map((input) => this.examsFactory.createExam(input)));
+    } catch (error) {
+      throw CREATE_EXAMS_ERROR;
     }
   }
 

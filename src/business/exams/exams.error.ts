@@ -29,3 +29,8 @@ export const GET_EXAM_LABS_ERROR = new CustomError(
   'GET_EXAM_LABS',
   'Erro ao buscar laboratórios associados a um exame'
 );
+
+export const CREATE_EXAMS_ERROR = new CustomError(
+  'CREATE_EXAMS',
+  'Erro ao criar exames em lote'
+);
