@@ -1,6 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity, Column, PrimaryGeneratedColumn, OneToMany
+} from 'typeorm';
 import { Status } from '@src/common/enums/Status';
 import { ExamsType } from './exams.enum';
+import { ExamsLabsEntity } from '../exams-labs/exams-labs.entity';
 
 @Entity('exams')
 export default class ExamsEntity {
@@ -30,4 +33,10 @@ export default class ExamsEntity {
 
   @Column({ nullable: true })
   deletedAt: Date
+
+  @OneToMany(
+    () => ExamsLabsEntity,
+    (examsLabs) => examsLabs.exam
+  )
+  examsLabs: ExamsLabsEntity[]
 }

@@ -1,5 +1,5 @@
 import {
-  Controller, Post, Body, Param, Delete
+  Controller, Post, Body, Param, Delete, Get
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import CreateExamLabInput from './inputs/CreateExamLabInput';

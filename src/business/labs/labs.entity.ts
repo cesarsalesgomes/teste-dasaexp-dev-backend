@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity, Column, PrimaryGeneratedColumn
+} from 'typeorm';
 import { Status } from '@src/common/enums/Status';
 import { States } from './labs.enum';
 

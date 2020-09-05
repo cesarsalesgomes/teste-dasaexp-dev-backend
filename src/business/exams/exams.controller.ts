@@ -1,10 +1,11 @@
 import {
-  Controller, Post, Body, Get, Put, Param, Delete
+  Controller, Post, Body, Get, Put, Param, Delete, Query
 } from '@nestjs/common';
 import CreateExamInput from './inputs/CreateExamInput';
 import ExamsEntity from './exams.entity';
 import ExamsService from './exams.service';
 import UpdateExamInput from './inputs/UpdateExamInput';
+import LabsEntity from '../labs/labs.entity';
 
 @Controller('exams')
 export class ExamsController {
@@ -28,5 +29,10 @@ export class ExamsController {
   @Delete(':id')
   async deleteExamById(@Param('id') examId: number): Promise<ExamsEntity> {
     return this.examsService.deleteExamById(examId);
+  }
+
+  @Get('labs')
+  async getExamByNameAndGetExamLabs(@Query('examName') examName: string): Promise<LabsEntity[]> {
+    return this.examsService.getExamByNameAndGetExamLabs(examName);
   }
 }

@@ -10,7 +10,8 @@ export class ExamsLabsEntity {
   id: number
 
   @OneToOne(
-    () => ExamsEntity
+    () => ExamsEntity,
+    (exam) => exam.examsLabs
   )
   @JoinColumn({
     name: 'examId',

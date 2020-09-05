@@ -4,11 +4,14 @@ import { Repository } from 'typeorm';
 import { Status } from '@src/common/enums/Status';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import {
-  CREATE_EXAM_ERROR, GET_ACTIVE_EXAMS_ERROR, EXAM_NOT_FOUND_ERROR, EXAM_UPDATE_ERROR, EXAM_DELETE_ERROR
+  CREATE_EXAM_ERROR, GET_ACTIVE_EXAMS_ERROR, EXAM_NOT_FOUND_ERROR,
+  EXAM_UPDATE_ERROR, EXAM_DELETE_ERROR, GET_EXAM_LABS_ERROR
 } from './exams.error';
 import ExamsFactory from './exams.factory';
 import CreateExamInput from './inputs/CreateExamInput';
 import ExamsEntity from './exams.entity';
+import { ExamsRelations } from './exams.enum';
+import LabsEntity from '../labs/labs.entity';
 
 @Injectable()
 export default class ExamsService {
@@ -42,6 +45,14 @@ export default class ExamsService {
     }
   }
 
+  async getExamByName(name: string, relations: ExamsRelations[]): Promise<ExamsEntity> {
+    try {
+      return await this.examsRepository.findOneOrFail({ where: { name }, relations });
+    } catch (error) {
+      throw EXAM_NOT_FOUND_ERROR;
+    }
+  }
+
   async updateExam(exam: ExamsEntity, partialExam: QueryDeepPartialEntity<ExamsEntity>): Promise<ExamsEntity> {
     try {
       const updatedAt = new Date();
@@ -67,6 +78,16 @@ export default class ExamsService {
       return this.updateExam(exam, { status: Status.INATIVO });
     } catch (error) {
       throw EXAM_DELETE_ERROR;
+    }
+  }
+
+  async getExamByNameAndGetExamLabs(examName: string): Promise<LabsEntity[]> {
+    const { examsLabs } = await this.getExamByName(examName, [ExamsRelations.examsLabs, ExamsRelations.examsLabsLab]);
+
+    try {
+      return examsLabs.map(({ lab }) => lab);
+    } catch (error) {
+      throw GET_EXAM_LABS_ERROR;
     }
   }
 }

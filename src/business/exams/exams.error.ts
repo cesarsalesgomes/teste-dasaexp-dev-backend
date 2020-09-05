@@ -24,3 +24,8 @@ export const EXAM_DELETE_ERROR = new CustomError(
   'EXAM_DELETE',
   'Erro ao desativar exame'
 );
+
+export const GET_EXAM_LABS_ERROR = new CustomError(
+  'GET_EXAM_LABS',
+  'Erro ao buscar laboratórios associados a um exame'
+);
