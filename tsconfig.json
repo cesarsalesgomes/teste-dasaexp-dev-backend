@@ -12,7 +12,7 @@
     "baseUrl": ".",
     "incremental": true,
     "resolveJsonModule": true,
-    "types": ["node"],
+    "types": ["node", "jest"],
     "paths": {
       "@src/*": ["./src/*"]
     }
