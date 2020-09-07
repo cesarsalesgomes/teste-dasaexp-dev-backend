@@ -1,0 +1,18 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: spvhmz9a
+      POSTGRES_USER: postgres
+      POSTGRES_DB: dasaexp
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  app:
+    image: teste-dasaexp-dev-backend/dockernode
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
