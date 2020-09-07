@@ -4,10 +4,11 @@ import * as request from 'supertest';
 import { Status } from '@src/common/enums/Status';
 import LabsEntity from '@src/business/labs/labs.entity';
 import { States } from '@src/business/labs/labs.enum';
+import { LAB_NOT_FOUND_ERROR } from '@src/business/labs/labs.error';
 import { getTestModule } from '../../config/getTestModule';
 import { mockActiveLab, mockNotActiveLab, mockActiveLab2 } from './mock';
 
-describe('Create labs', () => {
+describe('Labs Tests', () => {
   let app: INestApplication;
   let testService: TestService;
 
@@ -162,5 +163,23 @@ describe('Create labs', () => {
     expect(activeLabs[0].neighborhood).toEqual('Vila Meziara');
     expect(activeLabs[0].additionalInfo).toEqual('Próximo ao ponto');
     expect(activeLabs[0].status).toEqual(Status.ATIVO);
+  });
+
+  test('should throw not found lab error when updating not existing lab', async () => {
+    const response = (await request(app.getHttpServer())
+      .put('/labs/1')
+      .send(mockActiveLab)
+      .expect(500)).body;
+
+    expect(response.message).toEqual(LAB_NOT_FOUND_ERROR.message);
+  });
+
+  test('should throw not found lab when deleting not existing lab', async () => {
+    const response = (await request(app.getHttpServer())
+      .delete('/labs/1')
+      .send(mockActiveLab)
+      .expect(500)).body;
+
+    expect(response.message).toEqual(LAB_NOT_FOUND_ERROR.message);
   });
 });

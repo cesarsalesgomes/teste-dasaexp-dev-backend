@@ -4,10 +4,11 @@ import * as request from 'supertest';
 import ExamsEntity from '@src/business/exams/exams.entity';
 import { ExamsType } from '@src/business/exams/exams.enum';
 import { Status } from '@src/common/enums/Status';
+import { EXAM_NOT_FOUND_ERROR } from '@src/business/exams/exams.error';
 import { getTestModule } from '../../config/getTestModule';
 import { mockActiveExam, mockNotActiveExam, mockActiveExam2 } from './mock';
 
-describe('Create exams', () => {
+describe('Exams Tests', () => {
   let app: INestApplication;
   let testService: TestService;
 
@@ -136,5 +137,23 @@ describe('Create exams', () => {
     expect(activeExams[0].name).toEqual('Exame #2');
     expect(activeExams[0].type).toEqual(ExamsType.IMAGEM);
     expect(activeExams[0].status).toEqual(Status.ATIVO);
+  });
+
+  test('should throw not found exam error when updating not existing exam', async () => {
+    const response = (await request(app.getHttpServer())
+      .put('/exams/1')
+      .send(mockActiveExam2)
+      .expect(500)).body;
+
+    expect(response.message).toEqual(EXAM_NOT_FOUND_ERROR.message);
+  });
+
+  test('should throw not found exam when deleting not existing exam', async () => {
+    const response = (await request(app.getHttpServer())
+      .delete('/exams/1')
+      .send(mockActiveExam2)
+      .expect(500)).body;
+
+    expect(response.message).toEqual(EXAM_NOT_FOUND_ERROR.message);
   });
 });
